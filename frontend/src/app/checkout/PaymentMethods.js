@@ -59,7 +59,7 @@ const PaymentMethods = ({ selectedPaymentMethod, handlePaymentMethodChange }) =>
       </div>
 
       <p className={styles.confirmationText}>
-        Una vez realizado el pago, selecciona el método y haz clic en "Realizar Pedido". 
+        Una vez realizado el pago, selecciona el método y haz clic en &quot;Realizar Pedido&quot;. 
         Nosotros verificaremos la transacción y procederemos con el envío, revisa tu correo, hay te vamos a estar avisando sobre el estado de tu pedido.
       </p>
     </div>

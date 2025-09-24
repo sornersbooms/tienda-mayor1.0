@@ -246,7 +246,7 @@ const SmartSearch = () => {
             </div>
           ) : query.length > 1 ? (
             <div className={styles.noResults}>
-              <span>No se encontraron productos para "{query}"</span>
+              <span>{`No se encontraron productos para "${query}"`}</span>
               <div className={styles.searchTips}>
                 <p>💡 Sugerencias:</p>
                 <ul>
