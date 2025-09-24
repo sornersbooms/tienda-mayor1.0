@@ -46,6 +46,9 @@ export default function ProductDetailPage({ params }) {
   // State for the main image
   const [mainImage, setMainImage] = useState(product.images && product.images.length > 0 ? product.images[0] : '');
 
+  const newPrice = product?.providerPrice ? product.providerPrice * 2.5 : null; // Use optional chaining
+  const oldPrice = newPrice ? newPrice * 1.30 : null; // 30% more expensive
+
   useEffect(() => {
     if (product && typeof window !== 'undefined' && window.dataLayer) {
       const item = {
@@ -72,9 +75,6 @@ export default function ProductDetailPage({ params }) {
   if (!product) {
     return <div className={styles.notFound}>Producto no encontrado</div>;
   }
-
-  const newPrice = product.providerPrice ? product.providerPrice * 2.5 : null;
-  const oldPrice = newPrice ? newPrice * 1.30 : null; // 30% more expensive
 
   // Helper para generar un número pseudoaleatorio basado en una semilla
   const seededRandom = (seed) => {
