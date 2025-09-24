@@ -1,14 +1,15 @@
-'use client';
-
 import Image from "next/image";
 import Link from "next/link"; // Import Link
 import styles from "./page.module.css";
 import products from "../lib/products.json";
-import { useCart } from "./components/cart/CartContext";
+import AddToCartButton from "./components/cart/AddToCartButton"; // Importar el nuevo componente
 
 const formatPrice = (price) => {
+  if (typeof price !== 'number' || isNaN(price)) {
+    return '';
+  }
   return '$' + price.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ".");
-};
+}
 
 const generateStars = (rating) => {
   const stars = [];
@@ -44,7 +45,6 @@ const slugify = (text) => {
 };
 
 export default function Home() {
-  const { addToCart } = useCart();
   const productsWithDetails = products.map(product => {
     // Usar product.id como semilla para valores "aleatorios" deterministas
     const seed = product.id; // Usar el ID numérico directamente como semilla
@@ -83,11 +83,11 @@ export default function Home() {
           </p>
         </div>
 
-        
+
         {/* --- Fin Sección de Categorías Principales --- */}
 
         {/* --- Sección de Productos Destacados --- */}
-        
+
         {/* --- Fin Sección de Productos Destacados --- */}
 
         <div className={styles.grid}>
@@ -97,43 +97,45 @@ export default function Home() {
             const description = product.description ? product.description.substring(0, 100) + "..." : "";
 
             return (
-              <Link key={product.id} href={`/product/${product.slug}`} className={styles.card}>
-                {product.images && product.images.length > 0 && (
-                  <Image
-                    src={product.images[0]}
-                    alt={product.title}
-                    width={200}
-                    height={200}
-                    style={{ objectFit: "cover" }}
-                  />
-                )}
-                <div className={styles.productInfo}>
-                  <h2>{product.title}</h2>
-                  <div className={styles.rating}>
-                    {generateStars(product.rating)}
-                    <span className={styles.ratingText}>{product.rating} de 5 estrellas</span>
-                  </div>
-                  <p className={styles.description}>{description}</p>
-                  {product.tags && product.tags.length > 0 && (
-                    <div className={styles.tags}>
-                      {product.tags.map((tag) => (
-                        <span key={tag} className={styles.tag}>{tag}</span>
-                      ))}
-                    </div>
+              <div key={product.id} className={styles.cardContainer}> {/* Contenedor para Link y botón */}
+                <Link href={`/product/${product.slug}`} className={styles.card}>
+                  {product.images && product.images.length > 0 && (
+                    <Image
+                      src={product.images[0]}
+                      alt={product.title}
+                      width={200}
+                      height={200}
+                      style={{ objectFit: "cover" }}
+                    />
                   )}
-                  <div className={styles.priceContainer}>
-                    {oldPrice && <span className={styles.oldPrice}>{formatPrice(oldPrice)}</span>}
-                    {newPrice && <span className={styles.currentPrice}>{formatPrice(newPrice)}</span>}
+                  <div className={styles.productInfo}>
+                    <h2>{product.title}</h2>
+                    <div className={styles.rating}>
+                      {generateStars(product.rating)}
+                      <span className={styles.ratingText}>{product.rating} de 5 estrellas</span>
+                    </div>
+                    <p className={styles.description}>{description}</p>
+                    {product.tags && product.tags.length > 0 && (
+                      <div className={styles.tags}>
+                        {product.tags.map((tag) => (
+                          <span key={tag} className={styles.tag}>{tag}</span>
+                        ))}
+                      </div>
+                    )}
+                    <div className={styles.priceContainer}>
+                      {oldPrice && <span className={styles.oldPrice}>{formatPrice(oldPrice)}</span>}
+                      {newPrice && <span className={styles.currentPrice}>{formatPrice(newPrice)}</span>}
+                    </div>
+                    <p className={styles.quantityBought}>{product.quantityBought} comprados el mes pasado</p>
+                    <p className={styles.deliveryInfo}>Entrega: {product.formattedDeliveryDate}</p>
                   </div>
-                  <p className={styles.quantityBought}>{product.quantityBought} comprados el mes pasado</p>
-                  <p className={styles.deliveryInfo}>Entrega: {product.formattedDeliveryDate}</p>
-                  <button className={styles.addToCartButton} onClick={(e) => { e.preventDefault(); addToCart(product); }}>Agregar al Carrito</button>
-                </div>
-              </Link>
+                </Link>
+                <AddToCartButton product={product} />
+              </div>
             );
           })}
         </div>
       </main>
     </div>
   );
-} 
+}

@@ -41,6 +41,13 @@
   grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
   gap: 1.5rem;
   width: 100%;
+  align-items: stretch;
+}
+
+.cardContainer {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
 }
 
 .card {
@@ -52,6 +59,7 @@
   display: flex;
   flex-direction: column;
   overflow: hidden; /* Ensure image doesn't overflow rounded corners */
+  flex-grow: 1;
 }
 
 .card:hover {
