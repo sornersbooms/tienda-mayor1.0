@@ -1,6 +1,6 @@
 'use client'; // Mark as client component
 
-import React, { useState } from 'react'; // Import React and useState
+import React, { useState, useEffect } from 'react'; // Import React, useState, and useEffect
 import Image from "next/image";
 import Link from "next/link";
 import styles from "./page.module.css";
@@ -45,6 +45,29 @@ export default function ProductDetailPage({ params }) {
 
   // State for the main image
   const [mainImage, setMainImage] = useState(product.images && product.images.length > 0 ? product.images[0] : '');
+
+  useEffect(() => {
+    if (product && typeof window !== 'undefined' && window.dataLayer) {
+      const item = {
+        item_id: product.id.toString(), // GA4 expects string
+        item_name: product.title,
+        currency: "USD", // Assuming USD, adjust if necessary
+        price: newPrice ? parseFloat(newPrice.toFixed(2)) : 0,
+        item_category: product.category,
+        // Add other relevant product details if available and desired
+        // e.g., item_brand: product.brand, item_variant: product.variant
+      };
+
+      window.dataLayer.push({
+        event: "view_item",
+        ecommerce: {
+          currency: item.currency,
+          value: item.price,
+          items: [item],
+        },
+      });
+    }
+  }, [product, newPrice]); // Re-run if product or newPrice changes
 
   if (!product) {
     return <div className={styles.notFound}>Producto no encontrado</div>;
