@@ -2,7 +2,7 @@ import { Inter, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 import Navbar from "./components/Navbar/Navbar";
 import ShippingBanner from "./components/ShippingBanner/ShippingBanner";
-import { CartProvider } from "./components/cart/CartContext"; // Import CartProvider
+import { Providers } from "./providers"; // Import Providers
 import CartSidebar from "./components/cart/CartSidebar";
 
 const inter = Inter({
@@ -24,12 +24,12 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body className={`${inter.variable} ${jetbrainsMono.variable}`}>
-        <CartProvider> {/* Wrap content with CartProvider */}
+        <Providers> {/* Wrap content with Providers */}
           <ShippingBanner />
           <Navbar />
           {children}
           <CartSidebar />
-        </CartProvider>
+        </Providers>
       </body>
     </html>
   );
