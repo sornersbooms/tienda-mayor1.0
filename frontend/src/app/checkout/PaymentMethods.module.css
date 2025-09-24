@@ -1,0 +1,78 @@
+.paymentContainer {
+  margin-top: 2rem;
+  padding: 1.5rem;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  background-color: #f9f9f9;
+}
+
+.paymentContainer h2 {
+  margin-bottom: 1rem;
+  font-size: 1.5rem;
+  color: #333;
+}
+
+.paymentContainer p {
+  margin-bottom: 1.5rem;
+  color: #666;
+}
+
+.paymentOption {
+  display: flex;
+  align-items: center;
+  margin-bottom: 1rem;
+  padding: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  background-color: #fff;
+  cursor: pointer;
+  transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+.paymentOption:hover {
+  border-color: #007bff;
+}
+
+.radioInput {
+  margin-right: 1rem;
+  width: 20px;
+  height: 20px;
+}
+
+.radioLabel {
+  display: flex;
+  flex-direction: column;
+  cursor: pointer;
+}
+
+.paymentMethodName {
+  font-weight: bold;
+  font-size: 1.1rem;
+  color: #333;
+}
+
+.paymentMethodDetails {
+  font-size: 1rem;
+  color: #555;
+}
+
+.confirmationText {
+  margin-top: 1.5rem;
+  font-style: italic;
+  color: #888;
+}
+
+.recommendedOption {
+  border-color: #FF9900; /* Orange border for recommended option */
+  box-shadow: 0 0 8px rgba(255, 153, 0, 0.3); /* Orange shadow */
+}
+
+.recommendedTag {
+  background-color: #FF9900; /* Orange background */
+  color: #fff; /* White text */
+  padding: 0.2rem 0.5rem;
+  border-radius: 5px;
+  font-size: 0.8rem;
+  font-weight: normal;
+  margin-left: 0.5rem;
+}

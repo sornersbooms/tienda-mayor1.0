@@ -1,0 +1,74 @@
+.checkoutItem {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem 0;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.itemImage {
+  width: 65px;
+  height: 65px;
+  object-fit: cover;
+  border-radius: var(--border-radius);
+}
+
+.itemDetails {
+  flex-grow: 1;
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr auto;
+  align-items: center;
+  gap: 1rem;
+}
+
+.itemName {
+  font-weight: 500;
+}
+
+.quantityControl {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.7rem;
+}
+
+.quantityButton {
+  background-color: var(--background-color-light);
+  border: 1px solid var(--border-color);
+  border-radius: 50%;
+  cursor: pointer;
+  width: 24px;
+  height: 24px;
+  font-size: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.2s ease;
+}
+
+.quantityButton:hover {
+  background-color: var(--border-color);
+}
+
+.quantityText {
+  font-weight: bold;
+}
+
+.itemPrice {
+  font-weight: 500;
+  text-align: right;
+}
+
+.removeButton {
+  background: none;
+  border: none;
+  color: var(--text-color-secondary);
+  font-size: 1.5rem;
+  cursor: pointer;
+  padding: 0 0.5rem;
+  transition: color 0.2s ease;
+}
+
+.removeButton:hover {
+  color: var(--error-color);
+}

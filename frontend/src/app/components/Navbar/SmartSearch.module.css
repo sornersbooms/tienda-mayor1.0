@@ -1,0 +1,322 @@
+/* Contenedor principal de búsqueda */
+.searchContainer {
+  position: relative;
+  flex: 1;
+  max-width: 1200px;
+  margin: 0 20px;
+}
+
+/* Formulario de búsqueda */
+.searchForm {
+  width: 100%;
+}
+
+/* Wrapper del input y botón */
+.searchWrapper {
+  display: flex;
+  align-items: center;
+  background: white;
+  border: 2px solid #cdd2d2;
+  border-radius: 8px;
+  overflow: hidden;
+  transition: all 0.2s ease;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.searchWrapper:focus-within {
+  border-color: #ff9900;
+  box-shadow: 0 0 0 3px rgba(255, 153, 0, 0.1);
+}
+
+/* Input de búsqueda */
+.searchInput {
+  flex: 1;
+  padding: 10px 15px;
+  border: none;
+  outline: none;
+  font-size: 14px;
+  background: transparent;
+  color: #333;
+  
+}
+
+.searchInput::placeholder {
+  color: #999;
+}
+
+/* Botón de búsqueda */
+.searchButton {
+  background: #ff9900;
+  border: none;
+  padding: 14px 20px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.2s ease;
+  color: white;
+}
+
+.searchButton:hover {
+  background: #e68a00;
+}
+
+.searchButton:active {
+  background: #cc7a00;
+}
+
+/* Spinner de carga */
+.spinner {
+  width: 20px;
+  height: 20px;
+  border: 2px solid transparent;
+  border-top: 2px solid currentColor;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* Contenedor de sugerencias */
+.suggestionsContainer {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  z-index: 1000;
+  margin-top: 4px;
+  max-height: 500px;
+  overflow-y: auto;
+}
+
+/* Lista de sugerencias */
+.suggestionsList {
+  max-height: 400px;
+  overflow-y: auto;
+}
+
+/* Item de sugerencia */
+.suggestionItem {
+  display: flex;
+  align-items: center;
+  padding: 12px 16px;
+  cursor: pointer;
+  border-bottom: 1px solid #f0f0f0;
+  transition: background-color 0.2s ease;
+  gap: 12px;
+}
+
+.suggestionItem:hover,
+.suggestionItem.selected {
+  background-color: #f8f9fa;
+}
+
+.suggestionItem:last-child {
+  border-bottom: none;
+}
+
+/* Imagen del producto */
+.productImage {
+  width: 50px;
+  height: 50px;
+  flex-shrink: 0;
+  border-radius: 6px;
+  overflow: hidden;
+  background-color: #f5f5f5;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.noImage {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #e0e0e0;
+  font-size: 20px;
+}
+
+/* Información del producto */
+.productInfo {
+  flex: 1;
+  min-width: 0;
+}
+
+.productTitle {
+  font-weight: 500;
+  color: #333;
+  margin-bottom: 4px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-size: 14px;
+}
+
+.productMeta {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  margin-bottom: 4px;
+}
+
+.category {
+  font-size: 12px;
+  color: #666;
+  background: #f0f0f0;
+  padding: 2px 6px;
+  border-radius: 4px;
+}
+
+.price {
+  font-size: 12px;
+  font-weight: 600;
+  color: #2e7d32;
+}
+
+.relevanceScore {
+  font-size: 11px;
+  color: #999;
+  font-style: italic;
+}
+
+/* Sin resultados */
+.noResults {
+  padding: 20px;
+  text-align: center;
+  color: #666;
+}
+
+.searchTips {
+  margin-top: 12px;
+  text-align: left;
+  background: #f8f9fa;
+  padding: 12px;
+  border-radius: 6px;
+}
+
+.searchTips p {
+  margin: 0 0 8px 0;
+  font-weight: 500;
+}
+
+.searchTips ul {
+  margin: 0;
+  padding-left: 16px;
+}
+
+.searchTips li {
+  font-size: 12px;
+  margin-bottom: 4px;
+}
+
+/* Historial de búsquedas */
+.historySection {
+  border-top: 1px solid #f0f0f0;
+  padding: 12px 0;
+}
+
+.historyTitle {
+  font-size: 12px;
+  font-weight: 500;
+  color: #666;
+  margin-bottom: 8px;
+  padding: 0 16px;
+}
+
+.historyItem {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 16px;
+  cursor: pointer;
+  font-size: 14px;
+  color: #666;
+  transition: background-color 0.2s ease;
+}
+
+.historyItem:hover {
+  background-color: #f8f9fa;
+}
+
+/* Item de carga */
+.loadingItem {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 16px;
+  color: #666;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .searchContainer {
+    margin: 10px 0;
+    max-width: 100%;
+  }
+  
+  .searchInput {
+    font-size: 16px; /* Previene zoom en iOS */
+    padding: 12px 16px;
+  }
+  
+  .searchButton {
+    padding: 12px 16px;
+  }
+  
+  .suggestionItem {
+    padding: 10px 12px;
+    gap: 10px;
+  }
+  
+  .productImage {
+    width: 40px;
+    height: 40px;
+  }
+  
+  .productTitle {
+    font-size: 13px;
+  }
+  
+  .productMeta {
+    gap: 8px;
+  }
+  
+  .category,
+  .price {
+    font-size: 11px;
+  }
+}
+
+@media (max-width: 480px) {
+  .searchWrapper {
+    border-radius: 6px;
+  }
+  
+  .searchInput {
+    padding: 10px 12px;
+    font-size: 14px;
+  }
+  
+  .searchButton {
+    padding: 10px 12px;
+  }
+  
+  .suggestionsContainer {
+    border-radius: 6px;
+  }
+}

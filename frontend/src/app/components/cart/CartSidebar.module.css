@@ -1,0 +1,90 @@
+.cartSidebar {
+  position: fixed;
+  top: 0;
+  right: -400px; /* Hidden by default */
+  width: 100%;
+  max-width: 400px;
+  height: 100%;
+  background-color: var(--background-color-light);
+  box-shadow: -2px 0 8px rgba(0, 0, 0, 0.1);
+  transition: right 0.3s ease-in-out;
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+}
+
+.cartSidebar.open {
+  right: 0; /* Slide in */
+}
+
+.sidebarHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.sidebarHeader h2 {
+  margin: 0;
+  font-size: 1.5rem;
+}
+
+.closeButton {
+  background: none;
+  border: none;
+  font-size: 2rem;
+  cursor: pointer;
+  color: var(--text-color);
+}
+
+.cartItemsContainer {
+  flex-grow: 1;
+  padding: 1rem;
+  overflow-y: auto;
+}
+
+.sidebarFooter {
+  padding: 1rem;
+  border-top: 1px solid var(--border-color);
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.cartSummary {
+  display: flex;
+  justify-content: space-between;
+  font-size: 1.2rem;
+  font-weight: bold;
+  margin-bottom: 1rem;
+}
+
+.checkoutButton,
+.clearCartButton {
+  padding: 0.75rem 1rem;
+  border: none;
+  border-radius: var(--border-radius);
+  cursor: pointer;
+  font-size: 1rem;
+  font-weight: bold;
+  transition: background-color 0.2s ease;
+}
+
+.checkoutButton {
+  background-color: var(--primary-color);
+  color: white;
+}
+
+.checkoutButton:hover {
+  background-color: var(--primary-color-dark);
+}
+
+.clearCartButton {
+  background-color: var(--secondary-color);
+  color: var(--text-color);
+}
+
+.clearCartButton:hover {
+  background-color: var(--secondary-color-dark);
+}
