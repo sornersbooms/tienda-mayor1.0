@@ -16,6 +16,7 @@ const app = express();
 const allowedOrigins = [
   'http://localhost:3000',
   process.env.FRONTEND_URL,
+  'https://gallant-stillness-production.up.railway.app'
 ].filter(Boolean);
 
 app.use(cors({
@@ -31,9 +32,21 @@ app.use(cors({
 app.use(express.json());
 
 // Conexión a MongoDB
-mongoose.connect(process.env.MONGO_URI)
-  .then(() => console.log('Conectado a MongoDB'))
-  .catch(err => console.error('Error al conectar a MongoDB:', err));
+mongoose.connect(process.env.MONGO_URI);
+
+const db = mongoose.connection;
+
+db.on('error', (err) => {
+  console.error('Error de conexión a MongoDB:', err);
+});
+
+db.once('open', () => {
+  console.log('Conectado a MongoDB exitosamente.');
+});
+
+db.on('disconnected', () => {
+  console.log('Desconectado de MongoDB.');
+});
 
 // Definir el esquema del ítem del pedido
 const orderItemSchema = new mongoose.Schema({

@@ -213,11 +213,11 @@ const SmartSearch = () => {
                 >
                   <div className={styles.productImage}>
                     {product.images && product.images.length > 0 ? (
-                      <img 
+                      <Image 
                         src={product.images[0]} 
                         alt={product.title}
                         className={styles.image}
-                        loading="lazy"
+                        width={50} height={50}
                       />
                     ) : (
                       <div className={styles.noImage}>

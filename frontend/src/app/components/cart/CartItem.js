@@ -9,7 +9,7 @@ const CartItem = ({ item }) => {
 
   return (
     <div className={styles.cartItem}>
-      <img src={item.image} alt={item.name} className={styles.itemImage} />
+      <Image src={item.image} alt={item.name} className={styles.itemImage} width={80} height={80} />
       <div className={styles.itemDetails}>
         <h3 className={styles.itemName}>{item.name}</h3>
         <p className={styles.itemPrice}>{item.price ? `${item.price.toFixed(2)}` : 'Precio no disponible'}</p>

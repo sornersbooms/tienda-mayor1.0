@@ -9,7 +9,7 @@ const CheckoutItem = ({ item }) => {
 
   return (
     <div className={styles.checkoutItem}>
-      <img src={item.image} alt={item.name} className={styles.itemImage} />
+      <Image src={item.image} alt={item.name} className={styles.itemImage} width={80} height={80} />
       <div className={styles.itemDetails}>
         <span className={styles.itemName}>{item.name}</span>
         <div className={styles.quantityControl}>
