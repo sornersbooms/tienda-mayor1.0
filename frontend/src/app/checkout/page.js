@@ -75,7 +75,8 @@ const CheckoutPage = () => {
     console.log('Pedido enviado:', orderData);
 
     try {
-      const response = await fetch('https://tienda-mayor10-production.up.railway.app/api/orders', { // URL del nuevo endpoint
+      const apiUrl = (process.env.NEXT_PUBLIC_BACKEND_URL || 'http://localhost:4000') + '/api/orders';
+      const response = await fetch(apiUrl, { // URL del nuevo endpoint
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

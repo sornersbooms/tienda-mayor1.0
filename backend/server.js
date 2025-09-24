@@ -13,7 +13,21 @@ const app = express();
 
 // Configura CORS para permitir peticiones desde tu frontend
 // En un entorno de producción, deberías restringir el origen a tu dominio real.
-app.use(cors({ origin: 'http://localhost:3000' })); 
+const allowedOrigins = [
+  'http://localhost:3000',
+  process.env.FRONTEND_URL,
+].filter(Boolean);
+
+app.use(cors({
+  origin: function (origin, callback) {
+    if (!origin) return callback(null, true);
+    if (allowedOrigins.indexOf(origin) === -1) {
+      const msg = 'La política de CORS para este sitio no permite acceso desde el origen especificado.';
+      return callback(new Error(msg), false);
+    }
+    return callback(null, true);
+  }
+})); 
 app.use(express.json());
 
 // Conexión a MongoDB
