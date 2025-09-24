@@ -1,6 +1,7 @@
 'use client';
 
 import React from 'react';
+import Image from 'next/image';
 import { useCart } from './CartContext';
 import styles from './CartItem.module.css';
 
