@@ -17,7 +17,7 @@ const allowedOrigins = [
   'http://localhost:3000',
   process.env.FRONTEND_URL,
   'https://gallant-stillness-production.up.railway.app',
-  'https://tiendamayor.com/'
+  'https://tiendamayor.com'
 ].filter(Boolean);
 
 app.use(cors({
