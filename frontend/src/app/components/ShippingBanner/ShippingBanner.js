@@ -45,7 +45,7 @@ const ShippingBanner = () => {
         setIsVisible(false);
       }
     }
-  }, []);
+  }, [FIVE_MINUTES_IN_MS]);
 
   const handleClose = () => {
     setIsVisible(false);

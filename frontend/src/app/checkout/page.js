@@ -29,6 +29,13 @@ const CheckoutPage = () => {
   const [selectedPaymentMethod, setSelectedPaymentMethod] = useState('');
   const [errors, setErrors] = useState({});
 
+  // Redirige si el carrito está vacío y no estamos en la fase final de confirmación
+  useEffect(() => {
+    if (cartItems.length === 0 && step !== 3) {
+      router.push('/');
+    }
+  }, [cartItems, router, step]);
+
   // --- Navegación entre pasos ---
   const nextStep = () => {
     if (validateStep(step)) {
@@ -133,10 +140,7 @@ const CheckoutPage = () => {
     }
   }
 
-  if (cartItems.length === 0 && step !== 3) { // Evita la redirección si ya estamos en la página de confirmación
-    useEffect(() => {
-        router.push('/');
-    }, [router]);
+  if (cartItems.length === 0 && step !== 3) {
     return <div className={styles.container}><p>Tu carrito está vacío. Redirigiendo...</p></div>;
   }
 
