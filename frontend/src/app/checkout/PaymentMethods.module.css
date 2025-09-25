@@ -63,12 +63,12 @@
 }
 
 .recommendedOption {
-  border-color: #FF9900; /* Orange border for recommended option */
-  box-shadow: 0 0 8px rgba(255, 153, 0, 0.3); /* Orange shadow */
+  border-color: #00cc00; /* Orange border for recommended option */
+  box-shadow: 0 0 8px rgba(0, 255, 30, 0.3); /* Orange shadow */
 }
 
 .recommendedTag {
-  background-color: #FF9900; /* Orange background */
+  background-color: #00ff3c; /* Orange background */
   color: #fff; /* White text */
   padding: 0.2rem 0.5rem;
   border-radius: 5px;
