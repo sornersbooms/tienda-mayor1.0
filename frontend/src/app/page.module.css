@@ -326,3 +326,33 @@
   font-weight: 700;
   color: var(--apple-green);
 }
+/* Responsive adjustments for Hero section */
+@media (max-width: 768px) {
+  .hero {
+    padding: 2.5rem 1rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .heroTitle {
+    font-size: 2rem; /* Smaller font size for mobile */
+  }
+
+  .heroSubtitle {
+    font-size: 1rem; /* Smaller font size for mobile */
+  }
+}
+
+@media (max-width: 480px) {
+  .hero {
+    padding: 2rem 1rem;
+  }
+
+  .heroTitle {
+    font-size: 1.8rem; /* Even smaller for very small screens */
+    font-weight: 600; /* Slightly less bold */
+  }
+
+  .heroSubtitle {
+    font-size: 0.9rem;
+  }
+}

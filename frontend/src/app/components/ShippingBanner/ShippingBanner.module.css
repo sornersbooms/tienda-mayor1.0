@@ -1,16 +1,68 @@
-.shippingBanner {
-  background-color: #fff3cd;
-  color: #856404;
-  padding: 10px 20px;
-  text-align: center;
-  font-size: 0.9em;
-  border-bottom: 1px solid #ffeeba;
-  position: sticky;
-  top: 170px; /* Ajustado para aparecer debajo de la navbar */
-  z-index: 999; /* Un z-index menor que la navbar para evitar conflictos */
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 1010; /* Mayor que el navbar */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  backdrop-filter: blur(3px);
 }
 
-.shippingBanner p {
+.bannerModal {
+  background-color: #ffffff;
+  color: #333;
+  padding: 2rem;
+  border-radius: 12px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+  max-width: 500px;
+  width: 90%;
+  position: relative;
+  text-align: center;
+  border: 1px solid #e7e7e7;
+  animation: fadeIn 0.3s ease-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.closeButton {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  background: transparent;
+  border: none;
+  font-size: 1.8rem;
+  line-height: 1;
+  cursor: pointer;
+  color: #aaa;
+  transition: color 0.2s ease;
+}
+
+.closeButton:hover {
+  color: #333;
+}
+
+.bannerModal p {
   margin: 0;
-  line-height: 1.4;
+  line-height: 1.6;
+  font-size: 1rem;
+}
+
+.bannerModal p:first-of-type {
+  font-weight: 600;
+  font-size: 1.1rem;
+  margin-bottom: 0.75rem;
+  color: #000;
 }

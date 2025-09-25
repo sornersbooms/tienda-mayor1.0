@@ -8,14 +8,20 @@ const ShippingBanner = () => {
   const FIVE_MINUTES_IN_MS = 5 * 60 * 1000;
 
   useEffect(() => {
+    const manuallyClosed = localStorage.getItem('bannerManuallyClosed') === 'true';
+    if (manuallyClosed) {
+      setIsVisible(false);
+      return;
+    }
+
     const bannerShownTime = localStorage.getItem('bannerShownTime');
     const now = new Date().getTime();
 
     if (!bannerShownTime) {
-      // First time seeing the banner
+      // First time seeing the banner, and it wasn't manually closed before
       localStorage.setItem('bannerShownTime', now.toString());
       setIsVisible(true);
-      
+
       const timer = setTimeout(() => {
         setIsVisible(false);
       }, FIVE_MINUTES_IN_MS);
@@ -27,7 +33,7 @@ const ShippingBanner = () => {
       if (timeElapsed < FIVE_MINUTES_IN_MS) {
         // Still within the 5-minute window
         setIsVisible(true);
-        
+
         const remainingTime = FIVE_MINUTES_IN_MS - timeElapsed;
         const timer = setTimeout(() => {
           setIsVisible(false);
@@ -39,16 +45,26 @@ const ShippingBanner = () => {
         setIsVisible(false);
       }
     }
-  }, []); // Empty dependency array ensures this runs only once on mount
+  }, []);
+
+  const handleClose = () => {
+    setIsVisible(false);
+    localStorage.setItem('bannerManuallyClosed', 'true');
+  };
 
   if (!isVisible) {
     return null;
   }
 
   return (
-    <div className={styles.shippingBanner}>
-      <p>⚠️ ¡Atención! Actualmente, solo realizamos envíos dentro de Colombia.</p>
-      <p>Los precios y envíos son válidos únicamente para Colombia.</p>
+    <div className={styles.overlay}>
+      <div className={styles.bannerModal}>
+        <button onClick={handleClose} className={styles.closeButton} aria-label="Cerrar banner">
+          &times;
+        </button>
+        <p>⚠️ ¡Atención! Actualmente, solo realizamos envíos dentro de Colombia.</p>
+        <p>Los precios y envíos son válidos únicamente para Colombia.</p>
+      </div>
     </div>
   );
 };
