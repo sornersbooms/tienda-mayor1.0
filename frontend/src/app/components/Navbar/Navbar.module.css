@@ -273,7 +273,7 @@
     border-radius: 0 0 8px 8px;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
     padding: 8px 0;
-    z-index: 10002; /* Aumentado */
+    z-index: 10001; /* Aumentado */
     max-height: 85vh;
     overflow-y: auto;
   }
@@ -363,7 +363,7 @@
     padding: 8px;
     border-radius: 4px;
     transition: background-color 0.2s ease;
-    z-index: 10001; /* Aumentado */
+    z-index: 10002; /* Aumentado */
   }
 
   .menuIcon:hover {
@@ -398,10 +398,12 @@
     padding: 4px 0;
     grid-template-columns: 1fr 1fr;
     gap: 0;
+    z-index: 10001;
   }
   
   .navLinks.active {
     display: grid;
+    z-index: 10001;
   }
   
   .navLink {
@@ -430,6 +432,7 @@
   
   .menuIcon {
     padding: 4px;
+    z-index: 10000;
   }
   
   .bar {
@@ -453,10 +456,12 @@
     padding: 4px 0;
     grid-template-columns: 1fr 1fr;
     gap: 0;
+    z-index: 10001;
   }
   
   .navLinks.active {
     display: grid;
+    z-index: 10001;
   }
   
   .navLink {
@@ -485,6 +490,7 @@
   
   .menuIcon {
     padding: 4px;
+    z-index: 10000;
   }
   
   .bar {
