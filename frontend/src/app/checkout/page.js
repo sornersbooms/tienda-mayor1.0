@@ -16,6 +16,7 @@ const CheckoutPage = () => {
   const router = useRouter();
 
   const [step, setStep] = useState(1);
+  const [isInitialLoad, setIsInitialLoad] = useState(true); // Nuevo estado de carga
   const [formData, setFormData] = useState({
     name: '',
     lastName: '',
@@ -29,12 +30,17 @@ const CheckoutPage = () => {
   const [selectedPaymentMethod, setSelectedPaymentMethod] = useState('');
   const [errors, setErrors] = useState({});
 
-  // Redirige si el carrito está vacío y no estamos en la fase final de confirmación
   useEffect(() => {
-    if (cartItems.length === 0 && step !== 3) {
+    // Da tiempo a que el contexto del carrito se hidrate desde localStorage
+    setIsInitialLoad(false);
+  }, []);
+
+  // Redirige si el carrito está vacío, pero solo después de la carga inicial
+  useEffect(() => {
+    if (!isInitialLoad && cartItems.length === 0 && step !== 3) {
       router.push('/');
     }
-  }, [cartItems, router, step]);
+  }, [cartItems, router, step, isInitialLoad]);
 
   // --- Navegación entre pasos ---
   const nextStep = () => {
@@ -77,7 +83,6 @@ const CheckoutPage = () => {
   };
 
   const validateAll = () => {
-    // Ejecuta todas las validaciones a la vez
     const shippingErrors = validateStep(1);
     const paymentErrors = validateStep(2);
     return shippingErrors && paymentErrors;
@@ -87,8 +92,6 @@ const CheckoutPage = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!validateAll()) {
-      console.log('La validación final falló. No se puede enviar el pedido.');
-      // Opcional: redirigir al primer paso con errores
       const firstErrorStep = errors.name || errors.lastName || errors.email || errors.phone || errors.address || errors.city ? 1 : 2;
       setStep(firstErrorStep);
       return;
@@ -100,8 +103,6 @@ const CheckoutPage = () => {
       total: cartTotal,
       paymentMethod: selectedPaymentMethod,
     };
-
-    console.log('Enviando pedido final:', orderData);
 
     try {
       const apiUrl = (process.env.NEXT_PUBLIC_BACKEND_URL || 'http://localhost:4000') + '/api/orders';
@@ -135,11 +136,15 @@ const CheckoutPage = () => {
       case 3:
         return <ReviewStep formData={formData} selectedPaymentMethod={selectedPaymentMethod} prevStep={prevStep} handleSubmit={handleSubmit} />;
       default:
-        setStep(1); // Si algo sale mal, vuelve al primer paso
+        setStep(1);
         return null;
     }
   }
 
+  // Muestra un estado de carga o redirección mientras se verifica el carrito
+  if (isInitialLoad) {
+    return <div className={styles.container}><p>Cargando...</p></div>;
+  }
   if (cartItems.length === 0 && step !== 3) {
     return <div className={styles.container}><p>Tu carrito está vacío. Redirigiendo...</p></div>;
   }
