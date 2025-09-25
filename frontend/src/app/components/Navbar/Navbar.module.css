@@ -180,12 +180,12 @@
 }
 
 .categoriesDropdown::-webkit-scrollbar-thumb {
-  background: #c1c1c1;
+  background: #ffffff;
   border-radius: 3px;
 }
 
 .categoriesDropdown::-webkit-scrollbar-thumb:hover {
-  background: #a8a8a8;
+  background: #ffffff;
 }
 
 /* Scroll personalizado para el grid */
@@ -204,7 +204,7 @@
 }
 
 .categoriesGrid::-webkit-scrollbar-thumb:hover {
-  background: #adb5bd;
+  background: #ffffff;
 }
 
 /* Indicador de scroll */
