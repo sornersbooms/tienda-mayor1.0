@@ -199,7 +199,7 @@
 }
 
 .categoriesGrid::-webkit-scrollbar-thumb {
-  background: #dee2e6;
+  background: #ffffff;
   border-radius: 2px;
 }
 
@@ -269,7 +269,7 @@
     left: 0;
     right: 0;
     background-color: #fff;
-    border: 1px solid #eaeaea;
+    border: 1px solid #ffffff;
     border-radius: 0 0 8px 8px;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
     padding: 8px 0;
@@ -284,7 +284,7 @@
 
   .navLink {
     padding: 8px 16px;
-    border-bottom: 1px solid #f0f0f0;
+    border-bottom: 1px solid #ffffff;
     font-size: 0.85rem;
     color: #333;
     transition: all 0.2s ease;
@@ -310,7 +310,7 @@
     background-color: #f8f9fa;
     font-weight: 600;
     color: #0070f3;
-    border-bottom: 2px solid #0070f3;
+    border-bottom: 2px solid #ffffff;
   }
 
   /* Menú de categorías en móvil */
@@ -347,7 +347,7 @@
   .categoryLink {
     padding: 10px 20px;
     font-size: 0.9rem;
-    border-bottom: 1px solid #f5f5f5;
+    border-bottom: 1px solid #ffffff;
     border-radius: 0;
   }
 
@@ -367,7 +367,7 @@
   }
 
   .menuIcon:hover {
-    background-color: #f0f0f0;
+    background-color: #ffffff;
   }
 
   .menuIcon.active .bar:nth-child(1) {
@@ -398,12 +398,12 @@
     padding: 4px 0;
     grid-template-columns: 1fr 1fr;
     gap: 0;
-    z-index: 10001;
+   
   }
   
   .navLinks.active {
     display: grid;
-    z-index: 10001;
+    
   }
   
   .navLink {
@@ -411,14 +411,14 @@
     font-size: 0.75rem;
     min-height: 32px;
     line-height: 1.2;
-    border-bottom: 1px solid #f5f5f5;
-    border-right: 1px solid #f5f5f5;
+    border-bottom: 1px solid #ffffff;
+    border-right: 1px solid #ffffff;
     text-align: center;
     justify-content: center;
   }
   
   .navLink:nth-child(odd) {
-    border-right: 1px solid #f5f5f5;
+    border-right: 1px solid #ffffff;
   }
   
   .navLink:nth-child(even) {
@@ -432,7 +432,7 @@
   
   .menuIcon {
     padding: 4px;
-    z-index: 10000;
+   
   }
   
   .bar {
@@ -456,12 +456,12 @@
     padding: 4px 0;
     grid-template-columns: 1fr 1fr;
     gap: 0;
-    z-index: 10001;
+   
   }
   
   .navLinks.active {
     display: grid;
-    z-index: 10001;
+    
   }
   
   .navLink {
@@ -490,7 +490,7 @@
   
   .menuIcon {
     padding: 4px;
-    z-index: 10000;
+   
   }
   
   .bar {
