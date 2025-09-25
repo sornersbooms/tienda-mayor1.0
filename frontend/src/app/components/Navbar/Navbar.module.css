@@ -61,7 +61,7 @@
 
 .navLink:hover {
   color: #0070f3;
-  background-color: #f0f8ff;
+  background-color: #fafafa;
   transform: translateY(-1px);
 }
 
@@ -91,7 +91,7 @@
 
 .categoriesButton:hover {
   color: #0070f3;
-  background-color: #f0f8ff;
+  background-color: #ffffff;
   transform: translateY(-1px);
 }
 
@@ -513,7 +513,7 @@
     left: 0;
     right: 0;
     bottom: 0;
-    background: rgba(0, 0, 0, 0.1);
+    background: white; /* Cambiado a blanco */
     z-index: -1;
   }
 }
