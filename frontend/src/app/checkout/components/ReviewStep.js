@@ -3,7 +3,7 @@
 import React from 'react';
 import styles from '../checkout.module.css';
 
-const ReviewStep = ({ formData, selectedPaymentMethod, prevStep, handleSubmit }) => {
+const ReviewStep = ({ formData, selectedPaymentMethod, goToStep, handleSubmit }) => {
   return (
     <div className={styles.formStep}>
       <h2>Revisar y Confirmar Pedido</h2>
@@ -15,13 +15,13 @@ const ReviewStep = ({ formData, selectedPaymentMethod, prevStep, handleSubmit })
         <p><strong>Teléfono:</strong> {formData.phone}</p>
         <p><strong>Dirección:</strong> {formData.address}, {formData.city}</p>
         {formData.moreDetails && <p><strong>Detalles:</strong> {formData.moreDetails}</p>}
-        <button onClick={prevStep} className={styles.editButton}>Editar Envío</button>
+        <button onClick={() => goToStep(1)} className={styles.editButton}>Editar Envío</button>
       </div>
 
       <div className={styles.reviewSection}>
         <h4>Método de Pago</h4>
         <p>{selectedPaymentMethod}</p>
-        <button onClick={() => prevStep()} className={styles.editButton}>Editar Pago</button>
+        <button onClick={() => goToStep(2)} className={styles.editButton}>Editar Pago</button>
       </div>
 
       <div className={styles.stepActions}>

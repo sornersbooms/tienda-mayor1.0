@@ -16,7 +16,7 @@ const CheckoutPage = () => {
   const router = useRouter();
 
   const [step, setStep] = useState(1);
-  const [isInitialLoad, setIsInitialLoad] = useState(true); // Nuevo estado de carga
+  const [isInitialLoad, setIsInitialLoad] = useState(true);
   const [formData, setFormData] = useState({
     name: '',
     lastName: '',
@@ -31,11 +31,9 @@ const CheckoutPage = () => {
   const [errors, setErrors] = useState({});
 
   useEffect(() => {
-    // Da tiempo a que el contexto del carrito se hidrate desde localStorage
     setIsInitialLoad(false);
   }, []);
 
-  // Redirige si el carrito está vacío, pero solo después de la carga inicial
   useEffect(() => {
     if (!isInitialLoad && cartItems.length === 0 && step !== 3) {
       router.push('/');
@@ -50,6 +48,7 @@ const CheckoutPage = () => {
   };
 
   const prevStep = () => setStep(s => s - 1);
+  const goToStep = (stepNumber) => setStep(stepNumber); // Nueva función para ir a un paso específico
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -134,7 +133,7 @@ const CheckoutPage = () => {
       case 2:
         return <PaymentStep selectedPaymentMethod={selectedPaymentMethod} handlePaymentMethodChange={handlePaymentMethodChange} nextStep={nextStep} prevStep={prevStep} errors={errors} />;
       case 3:
-        return <ReviewStep formData={formData} selectedPaymentMethod={selectedPaymentMethod} prevStep={prevStep} handleSubmit={handleSubmit} />;
+        return <ReviewStep formData={formData} selectedPaymentMethod={selectedPaymentMethod} goToStep={goToStep} handleSubmit={handleSubmit} />;
       default:
         setStep(1);
         return null;
