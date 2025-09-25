@@ -397,7 +397,6 @@
   .navLinks {
     max-height: 90vh;
     padding: 6px 0;
-    display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 0;
   }
@@ -453,7 +452,6 @@
   .navLinks {
     max-height: 95vh;
     padding: 4px 0;
-    display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 0;
   }
