@@ -3,6 +3,7 @@ import Link from "next/link"; // Import Link
 import styles from "./page.module.css";
 import products from "../lib/products.json";
 import AddToCartButton from "./components/cart/AddToCartButton"; // Importar el nuevo componente
+import Hero from "./components/hero/Hero.js";
 
 const formatPrice = (price) => {
   if (typeof price !== 'number' || isNaN(price)) {
@@ -76,12 +77,7 @@ export default function Home() {
   return (
     <div className={styles.page}>
       <main className={styles.main}>
-        <div className={styles.hero}>
-          <h1 className={styles.heroTitle}>Bienvenido a TiendaMayor</h1>
-          <p className={styles.heroSubtitle}>
-            Los mejores productos, al mejor precio.
-          </p>
-        </div>
+        <Hero />
 
 
         {/* --- Fin Sección de Categorías Principales --- */}
