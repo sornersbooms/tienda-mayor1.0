@@ -273,7 +273,7 @@
     border-radius: 0 0 8px 8px;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
     padding: 8px 0;
-    z-index: 9999; /* Aumentado */
+    z-index: 10001; /* Aumentado */
     max-height: 85vh;
     overflow-y: auto;
   }
@@ -363,7 +363,7 @@
     padding: 8px;
     border-radius: 4px;
     transition: background-color 0.2s ease;
-    z-index: 10000; /* Aumentado */
+    z-index: 10002; /* Aumentado */
   }
 
   .menuIcon:hover {
