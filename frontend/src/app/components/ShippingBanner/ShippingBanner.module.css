@@ -6,7 +6,7 @@
   font-size: 0.9em;
   border-bottom: 1px solid #ffeeba;
   position: sticky;
-  top: 80px; /* Ajustado para aparecer debajo de la navbar */
+  top: 170px; /* Ajustado para aparecer debajo de la navbar */
   z-index: 999; /* Un z-index menor que la navbar para evitar conflictos */
 }
 
