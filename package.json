@@ -9,5 +9,8 @@
   "workspaces": [
     "backend",
     "frontend"
-  ]
+  ],
+  "dependencies": {
+    "typewriter-effect": "^2.22.0"
+  }
 }

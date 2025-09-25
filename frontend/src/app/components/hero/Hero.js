@@ -13,9 +13,9 @@ const Hero = () => {
           options={{
             strings: [
               'Bienvenido a <strong>TiendaMayor</strong>',
-              'Soluciones <strong>innovadoras</strong> para tu negocio.',
+              'Productos <strong>innovadores</strong> para tu dia a dia.',
               'Tu puerta de entrada al <strong>comercio electrónico</strong>.',
-              'Potencia tus ventas con <strong>nuestra plataforma</strong>.',
+              'Potencia tus ventas con <strong>nuestros precios bajos</strong>.',
             ],
             autoStart: true,
             loop: true,
