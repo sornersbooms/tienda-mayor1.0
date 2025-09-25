@@ -135,6 +135,26 @@ export default function ProductDetailPage({ params }) {
       "seller": {
         "@type": "Organization",
         "name": "TiendaMayor" // Nombre de tu tienda
+      },
+      "hasMerchantReturnPolicy": {
+        "@type": "MerchantReturnPolicy",
+        "applicableCountry": "US", // O el país que corresponda
+        "returnPolicyCategory": "https://schema.org/MerchantReturnFiniteReturnWindow",
+        "merchantReturnDays": 30,
+        "returnMethod": "https://schema.org/ReturnByMail",
+        "returnFees": "https://schema.org/FreeReturn"
+      },
+      "shippingDetails": {
+        "@type": "OfferShippingDetails",
+        "shippingRate": {
+          "@type": "MonetaryAmount",
+          "value": "5.99", // Tarifa de envío de ejemplo
+          "currency": "USD"
+        },
+        "shippingDestination": {
+          "@type": "DefinedRegion",
+          "addressCountry": "US" // O el país que corresponda
+        }
       }
     },
     "aggregateRating": {
