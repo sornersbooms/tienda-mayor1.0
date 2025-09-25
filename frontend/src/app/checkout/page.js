@@ -5,12 +5,17 @@ import { useCart } from '../components/cart/CartContext';
 import { useRouter } from 'next/navigation';
 import styles from './checkout.module.css';
 import CheckoutItem from './CheckoutItem';
-import PaymentMethods from './PaymentMethods';
+
+// Importar los componentes de cada paso
+import ShippingStep from './components/ShippingStep';
+import PaymentStep from './components/PaymentStep';
+import ReviewStep from './components/ReviewStep';
 
 const CheckoutPage = () => {
   const { cartItems, cartTotal, clearCart } = useCart();
   const router = useRouter();
 
+  const [step, setStep] = useState(1);
   const [formData, setFormData] = useState({
     name: '',
     lastName: '',
@@ -21,9 +26,17 @@ const CheckoutPage = () => {
     country: 'Colombia',
     moreDetails: '',
   });
-
   const [selectedPaymentMethod, setSelectedPaymentMethod] = useState('');
   const [errors, setErrors] = useState({});
+
+  // --- Navegación entre pasos ---
+  const nextStep = () => {
+    if (validateStep(step)) {
+      setStep(s => s + 1);
+    }
+  };
+
+  const prevStep = () => setStep(s => s - 1);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -34,35 +47,44 @@ const CheckoutPage = () => {
     setSelectedPaymentMethod(e.target.value);
   };
 
-  const validateForm = () => {
+  // --- Validación --- 
+  const validateStep = (currentStep) => {
     const newErrors = {};
-    if (!formData.name) newErrors.name = 'El nombre es obligatorio.';
-    if (!formData.lastName) newErrors.lastName = 'El apellido es obligatorio.';
-    if (!formData.email) {
-      newErrors.email = 'El correo es obligatorio.';
-    } else if (!/\S+@\S+\.\S+/.test(formData.email)) {
-      newErrors.email = 'El formato del correo no es válido.';
+    if (currentStep === 1) {
+      if (!formData.name) newErrors.name = 'El nombre es obligatorio.';
+      if (!formData.lastName) newErrors.lastName = 'El apellido es obligatorio.';
+      if (!formData.email) {
+        newErrors.email = 'El correo es obligatorio.';
+      } else if (!/\S+@\S+\.\S+/.test(formData.email)) {
+        newErrors.email = 'El formato del correo no es válido.';
+      }
+      if (!formData.phone) newErrors.phone = 'El teléfono es obligatorio.';
+      if (!formData.address) newErrors.address = 'La dirección es obligatoria.';
+      if (!formData.city) newErrors.city = 'La ciudad es obligatoria.';
     }
-    if (!formData.phone) {
-      newErrors.phone = 'El teléfono es obligatorio.';
-    } else if (!/^[0-9]+$/.test(formData.phone)) {
-      newErrors.phone = 'El teléfono solo debe contener números.';
+    if (currentStep === 2) {
+      if (!selectedPaymentMethod) newErrors.payment = 'Debes seleccionar un método de pago.';
     }
-    if (!formData.address) newErrors.address = 'La dirección es obligatoria.';
-    if (!formData.city) newErrors.city = 'La ciudad es obligatoria.';
-    if (!formData.country) newErrors.country = 'El país es obligatorio.';
-    if (!selectedPaymentMethod) newErrors.payment = 'Debes seleccionar un método de pago.';
-
-
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
 
+  const validateAll = () => {
+    // Ejecuta todas las validaciones a la vez
+    const shippingErrors = validateStep(1);
+    const paymentErrors = validateStep(2);
+    return shippingErrors && paymentErrors;
+  }
+
+  // --- Envío Final del Pedido ---
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!validateForm()) {
-      console.log('Validación del formulario fallida. No se procede con el pedido.'); // Nuevo log
-      return; // Detiene el envío si hay errores
+    if (!validateAll()) {
+      console.log('La validación final falló. No se puede enviar el pedido.');
+      // Opcional: redirigir al primer paso con errores
+      const firstErrorStep = errors.name || errors.lastName || errors.email || errors.phone || errors.address || errors.city ? 1 : 2;
+      setStep(firstErrorStep);
+      return;
     }
 
     const orderData = {
@@ -72,97 +94,71 @@ const CheckoutPage = () => {
       paymentMethod: selectedPaymentMethod,
     };
 
-    console.log('Pedido enviado:', orderData);
+    console.log('Enviando pedido final:', orderData);
 
     try {
       const apiUrl = (process.env.NEXT_PUBLIC_BACKEND_URL || 'http://localhost:4000') + '/api/orders';
-      const response = await fetch(apiUrl, { // URL del nuevo endpoint
+      const response = await fetch(apiUrl, {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(orderData),
       });
 
       if (response.ok) {
-        console.log('Pedido enviado a MongoDB con éxito');
         const result = await response.json();
-        localStorage.setItem('latestOrder', JSON.stringify({ ...orderData, _id: result.orderId })); // Guardar el ID del pedido de MongoDB
+        localStorage.setItem('latestOrder', JSON.stringify({ ...orderData, _id: result.orderId }));
       } else {
-        console.error('Error al enviar el pedido a MongoDB:', await response.text());
-        // Aunque haya un error al guardar en MongoDB, aún redirigimos para no bloquear al usuario
         localStorage.setItem('latestOrder', JSON.stringify(orderData));
       }
     } catch (error) {
-      console.error('Error de red al contactar el backend:', error);
-      // Si hay un error de red, aún redirigimos para no bloquear al usuario
       localStorage.setItem('latestOrder', JSON.stringify(orderData));
     }
 
-    console.log('Redirigiendo a /order-confirmation'); // Nuevo log
-    router.push('/order-confirmation'); 
-    clearCart(); 
+    router.push('/order-confirmation');
+    clearCart();
   };
 
-  if (cartItems.length === 0) {
-    return (
-      <div className={styles.container}>
-        <p>Redirigiendo...</p>
-      </div>
-    );
+  // --- Renderizado de Pasos ---
+  const renderStep = () => {
+    switch (step) {
+      case 1:
+        return <ShippingStep formData={formData} handleInputChange={handleInputChange} nextStep={nextStep} errors={errors} />;
+      case 2:
+        return <PaymentStep selectedPaymentMethod={selectedPaymentMethod} handlePaymentMethodChange={handlePaymentMethodChange} nextStep={nextStep} prevStep={prevStep} errors={errors} />;
+      case 3:
+        return <ReviewStep formData={formData} selectedPaymentMethod={selectedPaymentMethod} prevStep={prevStep} handleSubmit={handleSubmit} />;
+      default:
+        setStep(1); // Si algo sale mal, vuelve al primer paso
+        return null;
+    }
+  }
+
+  if (cartItems.length === 0 && step !== 3) { // Evita la redirección si ya estamos en la página de confirmación
+    useEffect(() => {
+        router.push('/');
+    }, [router]);
+    return <div className={styles.container}><p>Tu carrito está vacío. Redirigiendo...</p></div>;
   }
 
   return (
     <div className={styles.container}>
-      <h1 className={styles.title}>Finalizar Compra</h1>
       <div className={styles.checkoutLayout}>
         <div className={styles.formContainer}>
-          <h2>Información de Envío</h2>
-          <form onSubmit={handleSubmit} noValidate>
-            <div className={styles.formRow}>
-              <div className={styles.inputGroup}>
-                <input type="text" name="name" value={formData.name} onChange={handleInputChange} placeholder="Nombre" className={styles.inputField} />
-                {errors.name && <span className={styles.errorText}>{errors.name}</span>}
-              </div>
-              <div className={styles.inputGroup}>
-                <input type="text" name="lastName" value={formData.lastName} onChange={handleInputChange} placeholder="Apellido" className={styles.inputField} />
-                {errors.lastName && <span className={styles.errorText}>{errors.lastName}</span>}
-              </div>
+          <div className={styles.progressIndicator}>
+            <div className={`${styles.progressStep} ${step >= 1 ? styles.activeStep : ''}`}>
+              <span className={styles.stepNumber}>1</span>
+              <span className={styles.stepLabel}>Envío</span>
             </div>
-            <div className={styles.inputGroupFull}>
-              <input type="email" name="email" value={formData.email} onChange={handleInputChange} placeholder="Correo Electrónico" className={styles.inputFieldFull} />
-              {errors.email && <span className={styles.errorText}>{errors.email}</span>}
+            <div className={`${styles.progressStep} ${step >= 2 ? styles.activeStep : ''}`}>
+              <span className={styles.stepNumber}>2</span>
+              <span className={styles.stepLabel}>Pago</span>
             </div>
-            <div className={styles.inputGroupFull}>
-              <input type="tel" name="phone" value={formData.phone} onChange={handleInputChange} placeholder="Teléfono" className={styles.inputFieldFull} />
-              {errors.phone && <span className={styles.errorText}>{errors.phone}</span>}
+            <div className={`${styles.progressStep} ${step >= 3 ? styles.activeStep : ''}`}>
+              <span className={styles.stepNumber}>3</span>
+              <span className={styles.stepLabel}>Confirmar</span>
             </div>
-            <div className={styles.inputGroupFull}>
-              <input type="text" name="address" value={formData.address} onChange={handleInputChange} placeholder="Dirección" className={styles.inputFieldFull} />
-              {errors.address && <span className={styles.errorText}>{errors.address}</span>}
-            </div>
-            <div className={styles.formRow}>
-              <div className={styles.inputGroup}>
-                <input type="text" name="city" value={formData.city} onChange={handleInputChange} placeholder="Ciudad" className={styles.inputField} />
-                {errors.city && <span className={styles.errorText}>{errors.city}</span>}
-              </div>
-              <div className={styles.inputGroup}>
-                <input type="text" name="country" value={formData.country} onChange={handleInputChange} placeholder="País" className={styles.inputField} />
-                {errors.country && <span className={styles.errorText}>{errors.country}</span>}
-              </div>
-            </div>
-            <div className={styles.inputGroupFull}>
-              <textarea name="moreDetails" value={formData.moreDetails} onChange={handleInputChange} placeholder="Más detalles sobre el pedido" className={styles.inputFieldFull} rows="4"></textarea>
-            </div>
-            
-            <PaymentMethods 
-              selectedPaymentMethod={selectedPaymentMethod}
-              handlePaymentMethodChange={handlePaymentMethodChange}
-            />
-            {errors.payment && <span className={styles.errorText}>{errors.payment}</span>}
-
-            <button type="submit" className={styles.submitButton}>Realizar Pedido</button>
-          </form>
+          </div>
+          {renderStep()}
         </div>
 
         <div className={styles.summaryContainer}>
