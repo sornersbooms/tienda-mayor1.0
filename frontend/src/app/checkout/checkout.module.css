@@ -1,64 +1,54 @@
+/* --- Modelo de Caja Global --- */
+.container *, .container *::before, .container *::after {
+  box-sizing: border-box;
+}
+
 /* --- Contenedor Principal --- */
 .container {
   max-width: 1200px;
-  margin: 2rem auto;
-  padding: 1rem; /* Reducido para móviles */
+  margin: 0 auto; /* Sin margen vertical para que empiece desde arriba */
+  padding: 1rem;
 }
 
 .title {
   text-align: center;
-  margin-bottom: 2rem;
-  font-size: 2.2rem;
+  margin-bottom: 1.5rem;
+  font-size: 1.8rem; /* Tamaño reducido para móviles */
 }
 
 /* --- Layout Principal (Grid) --- */
 .checkoutLayout {
   display: grid;
   grid-template-columns: 1fr;
-  gap: 2rem;
-}
-
-/* En pantallas más grandes, usamos 2 columnas */
-@media (min-width: 992px) {
-  .checkoutLayout {
-    /* La columna del formulario es 1.5 veces más grande que la del resumen */
-    grid-template-columns: 1.5fr 1fr;
-  }
+  gap: 1.5rem; /* Gap reducido */
 }
 
 /* --- Contenedores de Formulario y Resumen --- */
 .formContainer, .summaryContainer {
   background-color: var(--background-color);
-  padding: 1.5rem;
+  padding: 1rem;
   border-radius: var(--border-radius-large);
-  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.07);
 }
 
 .summaryContainer {
-  /* Se posiciona después del formulario en móviles por defecto */
   grid-row: 2;
-}
-
-@media (min-width: 992px) {
-  .summaryContainer {
-    grid-row: auto; /* Vuelve al orden normal en desktop */
-  }
 }
 
 .formContainer h2, .summaryContainer h2 {
   margin-top: 0;
-  margin-bottom: 1.5rem;
+  margin-bottom: 1rem;
   border-bottom: 1px solid var(--border-color);
-  padding-bottom: 1rem;
-  font-size: 1.5rem;
+  padding-bottom: 0.75rem;
+  font-size: 1.3rem;
 }
 
-/* --- Indicador de Progreso --- */
+/* --- Indicador de Progreso (Más compacto) --- */
 .progressIndicator {
   display: flex;
   justify-content: space-between;
-  margin-bottom: 2rem;
-  padding: 0 1rem;
+  margin-bottom: 1.5rem;
+  padding: 0;
 }
 
 .progressStep {
@@ -68,41 +58,41 @@
   color: var(--text-color-light);
   position: relative;
   flex-grow: 1;
+  text-align: center;
 }
 
 .stepNumber {
-  width: 30px;
-  height: 30px;
+  width: 28px;
+  height: 28px;
   border-radius: 50%;
   background-color: var(--background-color-light);
   border: 2px solid var(--border-color);
   display: flex;
   align-items: center;
   justify-content: center;
+  font-size: 0.9rem;
   font-weight: bold;
   transition: background-color 0.3s, border-color 0.3s;
 }
 
 .stepLabel {
   margin-top: 0.5rem;
-  font-size: 0.8rem;
+  font-size: 0.7rem; /* Más pequeño */
   font-weight: 500;
 }
 
-/* Línea de conexión */
 .progressStep:not(:last-child)::after {
   content: '';
   position: absolute;
-  top: 15px;
+  top: 14px;
   left: 50%;
   width: 100%;
   height: 2px;
   background-color: var(--border-color);
-  transform: translateX(calc(15px));
+  transform: translateX(calc(14px));
   z-index: -1;
 }
 
-/* Estilos para el paso activo */
 .activeStep .stepNumber {
   background-color: var(--primary-color);
   border-color: var(--primary-color);
@@ -118,22 +108,17 @@
     background-color: var(--primary-color);
 }
 
-/* --- Estilos del Formulario --- */
+/* --- Estilos del Formulario (Más compacto) --- */
 .formStep h2 {
-    font-size: 1.5rem;
-    margin-bottom: 1.5rem;
+    font-size: 1.3rem;
+    margin-bottom: 1rem;
 }
 
 .formRow {
   display: flex;
-  flex-direction: column; /* Por defecto en columna para móviles */
-  gap: 1rem;
-}
-
-@media (min-width: 768px) {
-  .formRow {
-    flex-direction: row; /* Fila en pantallas más grandes */
-  }
+  flex-direction: column;
+  gap: 0;
+  margin-bottom: 1rem;
 }
 
 .inputGroup, .inputGroupFull {
@@ -143,18 +128,22 @@
   margin-bottom: 1rem;
 }
 
+.formRow .inputGroup {
+    margin-bottom: 1rem;
+}
+
 .label {
-  margin-bottom: 0.5rem;
-  font-size: 0.9rem;
+  margin-bottom: 0.4rem;
+  font-size: 0.85rem;
   font-weight: 600;
 }
 
 .inputField, .inputFieldFull {
   width: 100%;
-  padding: 0.9rem 1rem;
+  padding: 0.8rem 1rem;
+  font-size: 1rem;
   border: 1px solid var(--border-color);
   border-radius: var(--border-radius);
-  font-size: 1rem;
   background-color: var(--background-color-light);
   transition: border-color 0.2s, box-shadow 0.2s;
 }
@@ -172,39 +161,35 @@
 
 .errorText {
   color: var(--error-color);
-  font-size: 0.85rem;
+  font-size: 0.8rem;
   margin-top: 0.4rem;
 }
 
 /* --- Botones de Acción de Pasos --- */
 .stepActions {
-  margin-top: 2rem;
+  margin-top: 1rem;
   display: flex;
-  justify-content: flex-end; /* Alinea el botón a la derecha */
+  justify-content: flex-end;
 }
 
 .stepActionsMultiple {
   justify-content: space-between;
 }
 
-.submitButton {
+.submitButton, .secondaryButton {
   width: 100%;
-  padding: 1rem;
+  padding: 0.9rem;
+  border-radius: var(--border-radius);
+  font-size: 1rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.2s, color 0.2s, border-color 0.2s;
+}
+
+.submitButton {
   background-color: var(--primary-color);
   color: white;
   border: none;
-  border-radius: var(--border-radius);
-  font-size: 1.1rem;
-  font-weight: bold;
-  cursor: pointer;
-  transition: background-color 0.2s ease;
-}
-
-@media (min-width: 768px) {
-    .submitButton {
-        width: auto;
-        padding: 1rem 2.5rem;
-    }
 }
 
 .submitButton:hover {
@@ -215,12 +200,6 @@
   background-color: transparent;
   border: 1px solid var(--border-color);
   color: var(--text-color);
-  padding: 1rem 2.5rem;
-  border-radius: var(--border-radius);
-  font-size: 1.1rem;
-  font-weight: bold;
-  cursor: pointer;
-  transition: background-color 0.2s, color 0.2s, border-color 0.2s;
 }
 
 .secondaryButton:hover {
@@ -228,46 +207,47 @@
   border-color: var(--text-color-light);
 }
 
-
 /* --- Resumen del Pedido --- */
 .summaryItems {
   display: flex;
   flex-direction: column;
   gap: 1rem;
-  max-height: 500px;
+  max-height: 400px;
   overflow-y: auto;
   padding-right: 0.5rem;
 }
 
 .summaryTotal {
-  margin-top: 1.5rem;
-  padding-top: 1.5rem;
+  margin-top: 1rem;
+  padding-top: 1rem;
   border-top: 2px solid var(--border-color);
   display: flex;
   justify-content: space-between;
-  font-size: 1.3rem;
+  font-size: 1.2rem;
   font-weight: bold;
 }
 
 /* --- Review Step --- */
 .reviewSection {
   background-color: var(--background-color-light);
-  padding: 1.5rem;
+  padding: 1rem;
   border-radius: var(--border-radius);
-  margin-bottom: 1.5rem;
+  margin-bottom: 1rem;
   border: 1px solid var(--border-color);
 }
 
 .reviewSection h4 {
   margin-top: 0;
-  margin-bottom: 1rem;
+  margin-bottom: 0.75rem;
   border-bottom: 1px solid var(--border-color);
   padding-bottom: 0.75rem;
+  font-size: 1.1rem;
 }
 
 .reviewSection p {
-  margin: 0.5rem 0;
-  line-height: 1.6;
+  margin: 0.4rem 0;
+  line-height: 1.5;
+  font-size: 0.9rem;
 }
 
 .editButton {
@@ -276,7 +256,49 @@
   color: var(--primary-color);
   text-decoration: underline;
   cursor: pointer;
-  font-size: 0.9rem;
+  font-size: 0.85rem;
   padding: 0;
-  margin-top: 0.75rem;
+  margin-top: 0.5rem;
+}
+
+/*
+==========================================
+  ESTILOS PARA PANTALLAS GRANDES (DESKTOP)
+==========================================
+*/
+@media (min-width: 992px) {
+  .container {
+    padding: 2rem;
+  }
+
+  .title {
+    font-size: 2.5rem;
+  }
+
+  .checkoutLayout {
+    grid-template-columns: 1.5fr 1fr;
+    gap: 2rem;
+  }
+
+  .summaryContainer {
+    grid-row: auto;
+  }
+
+  .formContainer, .summaryContainer {
+    padding: 2rem;
+  }
+
+  .formContainer h2, .summaryContainer h2 {
+    font-size: 1.5rem;
+  }
+
+  .formRow {
+    flex-direction: row;
+    gap: 1.5rem;
+  }
+
+  .submitButton, .secondaryButton {
+    width: auto;
+    padding: 1rem 2.5rem;
+  }
 }
