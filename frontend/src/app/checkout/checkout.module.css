@@ -7,7 +7,7 @@
 .container {
   max-width: 1200px;
   margin: 0 auto; /* Sin margen vertical para que empiece desde arriba */
-  padding: 1rem;
+  padding: 70px 1rem 1rem;
 }
 
 .title {
